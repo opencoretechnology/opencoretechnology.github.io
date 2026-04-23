@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenCore Technology</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="">
+    
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --bg-dark: #0f1113;
+            --bg-card: #1a1d21;
+            --text-main: #e1e1e1;
+            --text-dim: #9da5b1;
+            --accent: #38bdf8; /* Technical blue accent */
+            --border: #2d3239;
+            --header-gradient: linear-gradient(135deg, #1a1d21 0%, #0f1113 100%);
+        }
+
+        /* General reset and base styles */
+        body {
+            margin: 0;
+            padding: 0;
+            /* Using system fonts for a neutral, professional tech look */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Header section with subtle gradient and border */
+        header {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: var(--header-gradient);
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Organization logo style (Square with rounded corners) */
+        .org-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            display: none; /* Hidden by default until JS loads the source */
+            margin-left: auto;
+            margin-right: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .org-logo:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+            color: #fff;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-top: 0.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 3rem 1.5rem;
+        }
+
+        /* Section titles with a minimalist horizontal line decoration */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: "";
+            height: 1px;
+            flex-grow: 1;
+            background: var(--border);
+        }
+
+        /* Information cards */
+        .card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.25rem;
+            color: var(--accent);
+        }
+
+        /* GitHub Projects Grid */
+        #repo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Individual repository card style */
+        .repo-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .repo-card:hover {
+            background: #23272e;
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .repo-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .repo-desc {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .repo-meta {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* Buttons styling */
+        .btn {
+            background: transparent;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            margin-top: 2rem;
+        }
+
+        .btn:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--text-main);
+        }
+
+        .btn-primary:hover {
+            background: #7dd3fc;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        /* Custom scrollbar for a consistent dark experience */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+    </style>
+</head>
+<body>
+
+<header>
+    <img id="main-logo" class="org-logo" src="" alt="OpenCore Logo">
+    <h1>OpenCore</h1>
+    <p class="tagline">Providing a high-performance, standardized core for the next generation of software.</p>
+    <a href="#projects" class="btn btn-primary">Explore Projects</a>
+</header>
+
+<div class="container">
+    <section>
+        <h2 class="section-title">Our Vision</h2>
+        <div class="card">
+            <h3>Standardized Innovation</h3>
+            <p>We believe technology should be unified, not fragmented. OpenCore provides the rock-solid foundation developers need to build faster and more efficiently without reinventing core components.</p>
+        </div>
+    </section>
+
+    <section id="projects" style="margin-top: 4rem;">
+        <h2 class="section-title">Active Projects</h2>
+        <div id="repo-container">
+            <p style="text-align: center; grid-column: 1/-1; color: var(--text-dim);">Syncing with GitHub...</p>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="https://github.com/opencoretechnology" target="_blank" class="btn">View Organization Profile</a>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <p>2026 OpenCore Technology Organization. Built for performance and reliability.</p>
+</footer>
+
+<script>
+    /**
+     * Configuration and Main Initialization Script
+     */
+    const GITHUB_USERNAME = 'opencoretechnology';
+
+    async function initializeSite() {
+        try {
+            // 1. Fetch Organization Data (Logo and Profile Info)
+            const userResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+            if (userResponse.ok) {
+                const userData = await userResponse.json();
+                const avatarUrl = userData.avatar_url;
+                
+                // Update Favicon (Browser Tab Icon)
+                document.getElementById('favicon').href = avatarUrl;
+                
+                // Update Header Logo
+                const logoImg = document.getElementById('main-logo');
+                logoImg.src = avatarUrl;
+                logoImg.style.display = 'block'; // Show logo only after URL is assigned
+            }
+
+            // 2. Fetch Repositories List (Sorted by most recently updated)
+            const repoResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated`);
+            if (!repoResponse.ok) throw new Error('Failed to fetch repos');
+            
+            const repos = await repoResponse.json();
+            const container = document.getElementById('repo-container');
+            
+            // Clear the loading message
+            container.innerHTML = ''; 
+
+            if (repos.length === 0) {
+                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No public repositories found.</p>';
+                return;
+            }
+
+            // 3. Render the top 6 repositories as cards
+            repos.slice(0, 6).forEach(repo => {
+                const repoHtml = `
+                    <a href="${repo.html_url}" target="_blank" class="repo-card">
+                        <div>
+                            <div class="repo-name">${repo.name}</div>
+                            <div class="repo-desc">${repo.description || 'A key component of the OpenCore unified technology stack.'}</div>
+                        </div>
+                        <div class="repo-meta">
+                            <span>★ ${repo.stargazers_count} stars</span>
+                        </div>
+                    </a>
+                `;
+                container.innerHTML += repoHtml;
+            });
+        } catch (error) {
+            console.error('Initialization Error:', error);
+            document.getElementById('repo-container').innerHTML = 
+                '<p style="grid-column: 1/-1; text-align: center;">Unable to load projects at this moment. Please check GitHub.</p>';
+        }
+    }
+
+    // Execute setup on page load
+    initializeSite();
+</script>
+
+</body>
+</html>
